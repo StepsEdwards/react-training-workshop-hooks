@@ -1,0 +1,115 @@
+========== TOOLS & RESOURCES ==========
+
+macvim text editor
+reacttraining foundation/fundamentals
+
+========== NOTES 5/23 ==========
+
+DOM objects vs HTML
+    className = DOM object
+    class = HTML
+    defaultValue = DOMobject
+    value = HTML 
+
+anything that can be passed in the arguments of a function can be put into JSX {}
+    so you can't pass an if statement, because it's not an expression
+
+props.children
+    is like any other prop, but it can be passed by name, or passed by position
+    if one child is passed, no array
+    if multiple children, the children prop will be an array of the children
+
+custom events
+    customEvent = ex: onKeyBoardClick (passed as a prop)
+    onKeyDown = checks for which key was pressed, then calls props.onKeyBoardClick for some condition
+
+** Thinking About The Problem **
+    think the way the designers think
+        think about all the different states, what's supposed to be rendered, then the user actions 
+        instead of adding set state immeadiately, start with a hard-coded state, that you can manually modify
+
+HOOKS ARE THE FUTURE!!!!
+    they will eventually replace classes completely
+    can also make using react-redux less appealing 
+
+hooks state example ==> useState()
+    the setState is run on the next render
+    ex:
+        const [message, setMessage] = useState(initMessage)
+
+hooks events/side-effexts example ==> useEffect()
+    like a synchronizer
+        whenever the passed in piece of data changes, run the desired code (initial render, every subsequent update)
+            // synchronize with
+            useEffect(()=> {}, ) // all state
+            useEffect(()=> {}, []) // no state
+            useEffect(()=> {}, [these, states]) // desired state
+    good for everything that is not in the ui
+        save to db
+        play a sound
+        alert
+        console.log
+        save to local storage
+    a "cleanup" function is only really necessary to do when running async actions in the the setup, in order to prevent memory leaks
+    ex:
+        useEffect(() => {
+            document.title = "New Post" + (message ? `: ${message}` : "" )
+        }, [message])
+
+useRef()
+    same object across renders and rerenders, NOT across component mounts and unmounts
+    ex: 
+        <Component ref={messageRef} />
+        const messageRef = useRef()
+    messageRef always points to the same object, but messageRef.current would point to the current thing that messageRef is pointing to.
+
+RESEARCH: render props
+RESEARCH: declarative vs. imperative paradigms/apis
+
+OLD WAY OF THINKING ABOUT REACT
+    classes
+    instances
+    constructors
+    super
+    this
+    method binding
+
+NEW WAY OF THINKING ABOUT REACT
+    functions
+    scope
+    arguments
+    returns
+    closures
+
+========== NOTES 5/24 ==========
+
+** Thinking About The Problem **
+    can start with a single component, then when things seem to start becoming unmanageable then start to separate things out into other components
+
+compound components ==> createContext()
+    components that can be broken down into smaller configurable components, but don't make sense apart from each other
+    similar to:
+        <select> && <option> tags
+        <ul>/<ol> && <li> tags
+
+facebook hired both of the guys who created react-redux
+    you can model the things you can do with redux now in react
+
+app-state ==> useReducer()
+    problem we want to solve
+        1. manage all of out state together, and not separately
+        2. group changes together
+        3. "product speak", higher level language to describe what we're doing
+    useReducer is like a fancy useState()
+    userReducer + createContext (at the root of the app) === behaves like redux
+    any redux middleware can be just a hook ==> function composition [funtions w/in functions]
+        logger
+        redux-thunk
+
+performance
+    console.time() && console.timeEnd()
+        wrap a function with console.time & console.timeEnd to see how long it takes to run
+        in order to see if it is slow
+    dev tools ==> react ==> profiler
+    react memo()
+    
